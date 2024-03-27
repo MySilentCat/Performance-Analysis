@@ -1,0 +1,5 @@
+Controller Server	56.2748	0.0
+Service Server	44.9652	12.6096
+DAO Server	24.6036	29.614
+SQL DataBase	11.716	42.3905
+Printer	2.02	18.405
