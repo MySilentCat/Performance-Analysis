@@ -1,4 +1,4 @@
-Controller Server	8.726	0.0
+Controller Server	8.726	1.9961
 Service Server	10.504	1.722
 DAO Server	4.242	4.2258
 SQL DataBase	2.02	6.3367

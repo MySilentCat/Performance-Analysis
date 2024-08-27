@@ -9,11 +9,11 @@ import os
 
 path = os.getcwd()
 
-print("100 people: 4 people per second")
+print("100 people: 8 people per second")
 # 10人 4人/秒
 # 生成泊松分布的人数
 simulate_dict["people_num"] = 100
-simulate_dict["people_avg"] = 4
+simulate_dict["people_avg"] = 8
 result = {'ASR': {'s': [], 'sc': [], 'a': [], 'ac': []}, 'TPS': {'s': [], 'sc': [], 'a': [], 'ac': []}, 'last_time': {'s': [], 'sc': [], 'a': [], 'ac': []}}
 people_arr = getPoissonArriveByNums(simulate_dict["people_num"], simulate_dict["people_avg"])
 # 生成概率

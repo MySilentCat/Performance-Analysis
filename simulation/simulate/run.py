@@ -158,10 +158,15 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                                 else:
                                     if [len(device_list)+1, ac_list[idx+1][-4]] not in start_start_list:
                                         start_start_list.append([len(device_list)+1, ac_list[idx+1][-4]])
-                                    if ac[4] == "Synchronous":
-                                        if len(device_list)+1 not in pre_out_idx:
-                                            pre_out_idx.append(len(device_list)+1)
-                                    else:
+                                    # if ac[4] == "Synchronous":
+                                    #     if len(device_list)+1 not in pre_out_idx:
+                                    #         pre_out_idx.append(len(device_list)+1)
+                                    # else:
+                                    #     if [len(device_list), True] not in start_end_list:
+                                    #         start_end_list.append([len(device_list), True])
+                                    if len(device_list)+1 not in pre_out_idx:
+                                        pre_out_idx.append(len(device_list)+1)
+                                    if ac[4] != "Synchronous":
                                         if [len(device_list), True] not in start_end_list:
                                             start_end_list.append([len(device_list), True])
                             else:
@@ -169,9 +174,10 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                                 for tidx, tmp_ac in enumerate(ac_list[idx+1]):
                                     if [len(device_list) + tidx, tmp_ac[-4]] not in start_start_list:
                                         start_start_list.append([len(device_list) + tidx, tmp_ac[-4]])
+                                    # if tmp_ac[4] == "Synchronous":
+                                    if len(device_list) + tidx not in pre_out_idx:
+                                        pre_out_idx.append(len(device_list) + tidx)
                                     if tmp_ac[4] == "Synchronous":
-                                        if len(device_list) + tidx not in pre_out_idx:
-                                            pre_out_idx.append(len(device_list) + tidx)
                                         wait_flag = True
                                 if not wait_flag:
                                     if [len(device_list)+1, True] not in start_end_list:
@@ -191,10 +197,15 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                                 else:
                                     if [len(device_list)+1, ac_list[idx+1][-4]] not in start_start_list:
                                         start_start_list.append([len(device_list)+1, ac_list[idx+1][-4]])
-                                    if ac[4] == "Synchronous":
-                                        if len(device_list)+1 not in pre_out_idx:
-                                            pre_out_idx.append(len(device_list)+1)
-                                    else:
+                                    # if ac[4] == "Synchronous":
+                                    #     if len(device_list)+1 not in pre_out_idx:
+                                    #         pre_out_idx.append(len(device_list)+1)
+                                    # else:
+                                    #     if [len(device_list), True] not in start_end_list:
+                                    #         start_end_list.append([len(device_list), True])
+                                    if len(device_list)+1 not in pre_out_idx:
+                                        pre_out_idx.append(len(device_list)+1)
+                                    if ac[4] != "Synchronous":
                                         if [len(device_list), True] not in start_end_list:
                                             start_end_list.append([len(device_list), True])
                             else:
@@ -202,9 +213,10 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                                 for tidx, tmp_ac in enumerate(ac_list[idx+1]):
                                     if [len(device_list) + tidx, tmp_ac[-4]] not in start_start_list:
                                         start_start_list.append([len(device_list) + tidx, tmp_ac[-4]])
+                                    # if tmp_ac[4] == "Synchronous":
+                                    if len(device_list) + tidx not in pre_out_idx:
+                                        pre_out_idx.append(len(device_list) + tidx)
                                     if tmp_ac[4] == "Synchronous":
-                                        if len(device_list) + tidx not in pre_out_idx:
-                                            pre_out_idx.append(len(device_list) + tidx)
                                         wait_flag = True
                                 if not wait_flag:
                                     if [len(device_list)+1, True] not in start_end_list:
@@ -213,7 +225,7 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                             if [len(device_list), True] not in start_end_list:
                                 start_end_list.append([len(device_list), True])
                     end_time = float("inf")
-                    tmp_list.append([device_name, start_time, end_time, ac[7], ac[8], pre_out_idx, start_start_list, end_start_list, end_end_list, start_end_list, "Actor"])
+                    tmp_list.append([device_name, start_time, end_time, ac[7], ac[8], pre_out_idx, start_start_list, end_start_list, end_end_list, start_end_list, "Actor", ac[4]])
                     device_list.append(device_name)
                     r_time_list.append([ac[-1], ac[10]])
                     return_dict[i].append(ac[-1])
@@ -237,9 +249,9 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                         start_start_list.append([len(device_list)+1, ac[-4]])
                         start_time = float("inf")
                         end_time = float("inf")
-                        if ac[4] == "Synchronous":
-                            pre_out_idx.append(len(device_list)+1)
-                        tmp_list.append([send_device, start_time, end_time, simulate_dict['wake_up_time'][send_device], 0.0, pre_out_idx, start_start_list, end_start_list, end_end_list, start_end_list, send_device])
+                        # if ac[4] == "Synchronous":
+                        pre_out_idx.append(len(device_list)+1)
+                        tmp_list.append([send_device, start_time, end_time, simulate_dict['wake_up_time'][send_device], 0.0, pre_out_idx, start_start_list, end_start_list, end_end_list, start_end_list, send_device, ac[4]])
                         device_list.append(send_device)
                         r_time_list.append([ac[-1], 0.0])
                         return_dict[i].append(ac[-1])
@@ -255,22 +267,31 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                                 if isinstance(ac_list[idx+1][0], int):
                                     next_device = ac_list[idx+1][1].split(".")[0]
                                     if next_device != recive_device:
-                                        tmp_idx = 0
-                                        for id in range(len(tmp_list)-1, -1, -1):
-                                            if tmp_list[id][-1] == next_device:
-                                                tmp_idx = id
-                                                break
-                                        if tmp_idx not in tmp_list[tmp_idx][7]:
-                                            tmp_list[tmp_idx][7].append(len(device_list)+1)
+                                        if next_device != send_device:
+                                            tmp_idx = 0
+                                            for id in range(len(tmp_list)-1, -1, -1):
+                                                if tmp_list[id][-1] == next_device:
+                                                    tmp_idx = id
+                                                    break
+                                            if tmp_idx not in tmp_list[tmp_idx][7]:
+                                                tmp_list[tmp_idx][7].append(len(device_list)+1)
+                                        # else:
+                                        #     if len(device_list)+1 not in end_start_list:
+                                        #         end_start_list.append(len(device_list)+1)
                                         if [len(device_list), True] not in start_end_list:
                                             start_end_list.append([len(device_list), True])
                                     else:
                                         if [len(device_list)+1, ac_list[idx+1][-4]] not in start_start_list:
                                             start_start_list.append([len(device_list)+1, ac_list[idx+1][-4]])
-                                        if ac[4] == "Synchronous":
-                                            if len(device_list)+1 not in pre_out_idx:
-                                                pre_out_idx.append(len(device_list)+1)
-                                        else:
+                                        # if ac[4] == "Synchronous":
+                                        #     if len(device_list)+1 not in pre_out_idx:
+                                        #         pre_out_idx.append(len(device_list)+1)
+                                        # else:
+                                        #     if [len(device_list), True] not in start_end_list:
+                                        #         start_end_list.append([len(device_list), True])
+                                        if len(device_list) + 1 not in pre_out_idx:
+                                            pre_out_idx.append(len(device_list)+1)
+                                        if ac[4] != "Synchronous":
                                             if [len(device_list), True] not in start_end_list:
                                                 start_end_list.append([len(device_list), True])
                                 else:
@@ -278,9 +299,10 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                                     for tidx, tmp_ac in enumerate(ac_list[idx+1]):
                                         if [len(device_list) + tidx + 1, tmp_ac[-4]] not in start_start_list:
                                             start_start_list.append([len(device_list) + tidx + 1, tmp_ac[-4]])
+                                        # if tmp_ac[4] == "Synchronous":
+                                        if len(device_list) + tidx + 1 not in pre_out_idx:
+                                            pre_out_idx.append(len(device_list) + tidx + 1)
                                         if tmp_ac[4] == "Synchronous":
-                                            if len(device_list) + tidx + 1 not in pre_out_idx:
-                                                pre_out_idx.append(len(device_list) + tidx + 1)
                                             wait_flag = True
                                     if not wait_flag:
                                         if [len(device_list), True] not in start_end_list:
@@ -288,7 +310,7 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                             else:
                                 if [len(device_list), True] not in start_end_list:
                                     start_end_list.append([len(device_list), True])
-                            tmp_list.append([recive_device, start_time, end_time, ac[7], ac[8], pre_out_idx, start_start_list, end_start_list, end_end_list, start_end_list, "##"])
+                            tmp_list.append([recive_device, start_time, end_time, ac[7], ac[8], pre_out_idx, start_start_list, end_start_list, end_end_list, start_end_list, "##", ac[4]])
                             device_list.append(recive_device)
                             r_time_list.append([ac[-1], ac[10]])
                         else:
@@ -319,9 +341,10 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                                     for tidx, tmp_ac in enumerate(ac_list[idx+1]):
                                         if [len(device_list) + tidx + 1, tmp_ac[-4]] not in start_start_list:
                                             start_start_list.append([len(device_list) + tidx + 1, tmp_ac[-4]])
+                                        # if tmp_ac[4] == "Synchronous":
+                                        if len(device_list) + tidx + 1 not in pre_out_idx:
+                                            pre_out_idx.append(len(device_list) + tidx + 1)
                                         if tmp_ac[4] == "Synchronous":
-                                            if len(device_list) + tidx + 1 not in pre_out_idx:
-                                                pre_out_idx.append(len(device_list) + tidx + 1)
                                             wait_flag = True
                                     if not wait_flag:
                                         if [len(device_list), True] not in start_end_list:
@@ -353,9 +376,9 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                                 else:
                                     if [len(device_list)+1, ac_list[idx+1][-4]] not in start_start_list:
                                         start_start_list.append([len(device_list)+1, ac_list[idx+1][-4]])
-                                    if ac[4] == "Synchronous":
-                                        if len(device_list)+1 not in pre_out_idx:
-                                            pre_out_idx.append(len(device_list)+1)
+                                    # if ac[4] == "Synchronous":
+                                    if len(device_list)+1 not in pre_out_idx:
+                                        pre_out_idx.append(len(device_list)+1)
                                     else:
                                         if [len(device_list), True] not in start_end_list:
                                             start_end_list.append([len(device_list), True])
@@ -388,7 +411,7 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                         else:
                             if [len(device_list), True] not in start_end_list:
                                 start_end_list.append([len(device_list), True])
-                        tmp_list.append([recive_device, start_time, end_time, ac[7], ac[8], pre_out_idx, start_start_list, end_start_list, end_end_list, start_end_list, "##"])
+                        tmp_list.append([recive_device, start_time, end_time, ac[7], ac[8], pre_out_idx, start_start_list, end_start_list, end_end_list, start_end_list, "##", ac[4]])
                         device_list.append(recive_device)
                         r_time_list.append([ac[-1], ac[10]])
             else:
@@ -411,9 +434,9 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                     for tidx, tmp_ac in enumerate(ac):
                         if [len(device_list) + tidx + 1, tmp_ac[-4]] not in start_start_list:
                             start_start_list.append([len(device_list) + tidx + 1, tmp_ac[-4]])
-                        if tmp_ac[4] == "Synchronous":
-                            if len(device_list) + tidx + 1 not in pre_out_idx:
-                                pre_out_idx.append(len(device_list) + tidx + 1)
+                        # if tmp_ac[4] == "Synchronous":
+                        if len(device_list) + tidx + 1 not in pre_out_idx:
+                            pre_out_idx.append(len(device_list) + tidx + 1)
                     if idx != len(ac_list) - 1:
                         if isinstance(ac_list[idx+1][0], int):
                             next_device = ac_list[idx+1][1].split(".")[0]
@@ -450,7 +473,7 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                     else:
                         if [len(device_list), False] not in start_end_list:
                             start_end_list.append([len(device_list), False])
-                    tmp_list.append([send_device, start_time, end_time, simulate_dict['wake_up_time'][send_device], 0.0, pre_out_idx, start_start_list, end_start_list, end_end_list, start_end_list, send_device])
+                    tmp_list.append([send_device, start_time, end_time, simulate_dict['wake_up_time'][send_device], 0.0, pre_out_idx, start_start_list, end_start_list, end_end_list, start_end_list, send_device, ac[0][4]])
                     now_idx = len(device_list)
                     device_list.append(send_device)
                     r_time_list.append([ac[-1], 0.0])
@@ -465,13 +488,13 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                             end_start_list = []
                             start_start_list = []
                             start_end_list = []
-                            if tmp_ac[4] == "Synchronous":
-                                if now_idx+tidx+1 not in tmp_list[now_idx][5]:
-                                    tmp_list[now_idx][5].append(now_idx+tidx+1)
-                                if [now_idx, tmp_ac[10]] not in end_end_list:
-                                    end_end_list.append([now_idx, tmp_ac[10]])
+                            # if tmp_ac[4] == "Synchronous":
+                            if now_idx+tidx+1 not in tmp_list[now_idx][5]:
+                                tmp_list[now_idx][5].append(now_idx+tidx+1)
+                            if [now_idx, tmp_ac[10]] not in end_end_list:
+                                end_end_list.append([now_idx, tmp_ac[10]])
                             start_end_list.append([now_idx+tidx+1, True])
-                            tmp_list.append([recive_device, start_time, end_time, tmp_ac[7], tmp_ac[8], pre_out_idx, start_start_list, end_start_list, end_end_list, start_end_list, "##"])
+                            tmp_list.append([recive_device, start_time, end_time, tmp_ac[7], tmp_ac[8], pre_out_idx, start_start_list, end_start_list, end_end_list, start_end_list, "##", tmp_ac[4]])
                             device_list.append(recive_device)
                             r_time_list.append([tmp_ac[-1], tmp_ac[10]])
                         else:
@@ -482,16 +505,16 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                             end_start_list = []
                             start_start_list = []
                             start_end_list = []
-                            if tmp_ac[4] == "Synchronous":
-                                if now_idx+tidx+1 not in tmp_list[now_idx][5]:
-                                    tmp_list[now_idx-1][5].append(now_idx+tidx+1)
-                                if [now_idx, 0.0] not in end_end_list:
-                                    end_end_list.append([now_idx, 0.0])
+                            # if tmp_ac[4] == "Synchronous":
+                            if now_idx+tidx+1 not in tmp_list[now_idx][5]:
+                                tmp_list[now_idx-1][5].append(now_idx+tidx+1)
+                            if [now_idx, 0.0] not in end_end_list:
+                                end_end_list.append([now_idx, 0.0])
                             start_end_list.append([now_idx+tidx+1, True])
                             for tmp_par in tmp_list[now_idx][6]:
                                 if tmp_par[0] == now_idx + tidx+1:
                                     tmp_par[1] = 0.0
-                            tmp_list.append([recive_device, start_time, end_time, tmp_ac[7], tmp_ac[8], pre_out_idx, start_start_list, end_start_list, end_end_list, start_end_list, "##"])
+                            tmp_list.append([recive_device, start_time, end_time, tmp_ac[7], tmp_ac[8], pre_out_idx, start_start_list, end_start_list, end_end_list, start_end_list, "##", tmp_ac[4]])
                             device_list.append(recive_device)
                             r_time_list.append([tmp_ac[-1], 0.0])
                 else:
@@ -506,13 +529,13 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                             end_start_list = []
                             start_start_list = []
                             start_end_list = []
-                            if tmp_ac[4] == "Synchronous":
-                                if now_idx + idx not in tmp_list[now_idx-1][5]:
-                                    tmp_list[now_idx-1][5].append(now_idx+idx)
-                                if [now_idx-1, tmp_ac[10]] not in end_end_list:
-                                    end_end_list.append([now_idx-1, tmp_ac[10]])
+                            # if tmp_ac[4] == "Synchronous":
+                            if now_idx + idx not in tmp_list[now_idx-1][5]:
+                                tmp_list[now_idx-1][5].append(now_idx+idx)
+                            if [now_idx-1, tmp_ac[10]] not in end_end_list:
+                                end_end_list.append([now_idx-1, tmp_ac[10]])
                             start_end_list.append([now_idx+tidx+1, True])
-                            tmp_list.append([recive_device, start_time, end_time, tmp_ac[7], tmp_ac[8], pre_out_idx, start_start_list, end_start_list, end_end_list, start_end_list, "##"])
+                            tmp_list.append([recive_device, start_time, end_time, tmp_ac[7], tmp_ac[8], pre_out_idx, start_start_list, end_start_list, end_end_list, start_end_list, "##", tmp_ac[4]])
                             device_list.append(recive_device)
                             r_time_list.append([tmp_ac[-1], tmp_ac[10]])
                         else:
@@ -523,22 +546,22 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                             end_start_list = []
                             start_start_list = []
                             start_end_list = []
-                            if tmp_ac[4] == "Synchronous":
-                                if now_idx + idx not in tmp_list[now_idx-1][5]:
-                                    tmp_list[now_idx-1][5].append(now_idx+idx)
-                                if [now_idx-1, 0.0] not in end_end_list:
-                                    end_end_list.append([now_idx-1, 0.0])
+                            # if tmp_ac[4] == "Synchronous":
+                            if now_idx + idx not in tmp_list[now_idx-1][5]:
+                                tmp_list[now_idx-1][5].append(now_idx+idx)
+                            if [now_idx-1, 0.0] not in end_end_list:
+                                end_end_list.append([now_idx-1, 0.0])
                             start_end_list.append([now_idx+tidx, True])
                             for tmp_par in tmp_list[now_idx][6]:
                                 if tmp_par[0] == now_idx + tidx:
                                     tmp_par[1] = 0.0
-                            tmp_list.append([recive_device, start_time, end_time, tmp_ac[7], tmp_ac[8], pre_out_idx, start_start_list, end_start_list, end_end_list, start_end_list, "##"])
+                            tmp_list.append([recive_device, start_time, end_time, tmp_ac[7], tmp_ac[8], pre_out_idx, start_start_list, end_start_list, end_end_list, start_end_list, "##", tmp_ac[4]])
                             device_list.append(recive_device)
                             r_time_list.append([tmp_ac[-1], 0.0])
         for tidx, tmp in enumerate(tmp_list):
             for jdx in tmp[5]:
-                if [tidx, r_time_list[jdx][1]] not in tmp_list[jdx][-3]:
-                    tmp_list[jdx][-3].append([tidx, r_time_list[jdx][1]])
+                if [tidx, r_time_list[jdx][1]] not in tmp_list[jdx][-4]:
+                    tmp_list[jdx][-4].append([tidx, r_time_list[jdx][1]])
             tmp.append([])
         for tidx, tmp in enumerate(tmp_list):
             if tidx == 0:
@@ -549,6 +572,8 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
             for jdx in tmp[7]:
                 if jdx not in tmp_list[jdx][-1]:
                     tmp_list[jdx][-1].append(tidx)
+        for tidx in range(len(tmp_list)):
+            tmp_list[tidx].insert(-1, float("inf"))
         new_plist.append([i, arr_time, tmp_list, 0.0, 0.0])
 
     time0 = time.time()

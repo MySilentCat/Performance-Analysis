@@ -1,0 +1,5 @@
+Controller Server	1.275812807	0.1101
+Service Server	1.381857525	0.004055282
+DAO Server	1.050612807	0.0
+SQL DataBase	0.869053257	0.07045955
+Printer	0.0	0.0
