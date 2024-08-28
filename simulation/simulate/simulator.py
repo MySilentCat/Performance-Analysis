@@ -11,6 +11,7 @@ import copy
 import math
 
 
+
 def new_simulator(people_list, thread_dict):
     # step_dict:
     step_dict = {}
