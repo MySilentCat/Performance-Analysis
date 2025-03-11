@@ -77,6 +77,10 @@ def random_prob(num):
     path_prob = [random.random() for i in range(num)]
     return actor_prob, business_prob, path_prob
 
+def random_idx(num):
+    random.seed(1)
+    insert_prob = [random.random() for i in range(num)]
+    return insert_prob
 
 def run(simulate_dict, business_path, people_list, actor_prob, business_prob, path_prob, actor_business, file_name):
     business_sync = business_path
@@ -109,9 +113,10 @@ def run(simulate_dict, business_path, people_list, actor_prob, business_prob, pa
                 path = key
                 break
         if business == "Print Book":
-            tmp = [j for j in business_sync["business"]["Read Book"]["path0"]]
-            tmp.extend(business_sync["business"][business][key])
-            business_list.append(tmp)
+            # tmp = [j for j in business_sync["business"]["Read Book"]["path0"]]
+            # tmp.extend(business_sync["business"][business][key])
+            # business_list.append(tmp)
+            business_list.append(business_sync["business"][business][path])
             time_info.append([i, ac, business, people_list[i][1]])
         else:
             business_list.append(business_sync["business"][business][path])
